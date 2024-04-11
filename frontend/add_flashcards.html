@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcard App</title>
+    <title>Add Flashcards</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Flashcard App</h1>
+        <h1>Add Flashcards to Deck</h1>
+        <h2>Deck Name: <span id="deckName"></span></h2>
     </header>
     <main>
         <section id="flashcards">
@@ -17,7 +18,11 @@
     </main>
     <footer>
         <button id="addFlashcardBtn">Add Flashcard</button>
+        <button onclick="window.location.href = 'deck.html'">Change Deck</button>
     </footer>
     <script src="script.js"></script>
+    <script>
+        document.getElementById('deckName').textContent = localStorage.getItem('deckName');
+    </script>
 </body>
 </html>

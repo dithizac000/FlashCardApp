@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deck Name Entry</title>
+</head>
+<body>
+    <h1>Enter Deck Name</h1>
+    <form id="deckForm">
+        <label for="deckName">Deck Name:</label>
+        <input type="text" id="deckName" required>
+        <button type="submit">Proceed to Add Flashcards</button>
+    </form>
+    <script>
+        document.getElementById('deckForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const deckName = document.getElementById('deckName').value;
+            if (deckName.trim() === '') {
+                alert('Please enter a deck name.');
+                return;
+            }
+            localStorage.setItem('deckName', deckName);
+            window.location.href = 'add_flashcards.html';
+        });
+    </script>
+</body>
+</html>
