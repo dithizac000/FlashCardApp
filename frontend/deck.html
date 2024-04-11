@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deck Name Entry</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include the CSS file -->
 </head>
 <body>
-    <h1>Enter Deck Name</h1>
-    <form id="deckForm">
-        <label for="deckName">Deck Name:</label>
-        <input type="text" id="deckName" required>
-        <button type="submit">Proceed to Add Flashcards</button>
-    </form>
+    <header>
+        <h1>Enter Deck Name</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="deck.html">Add Deck</a></li>
+                <li><a href="view_deck.html">View Deck</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <main>
+        <form id="deckForm">
+            <label for="deckName">Deck Name:</label>
+            <input type="text" id="deckName" required>
+            <button type="submit">Proceed to Add Flashcards</button>
+        </form>
+    </main>
     <script>
         document.getElementById('deckForm').addEventListener('submit', (event) => {
             event.preventDefault();

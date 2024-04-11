@@ -5,10 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Flashcards</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Hide the Save Deck button initially */
+        #saveDeckBtn {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Add Flashcards to Deck</h1>
+
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="deck.html">Add Deck</a></li>
+                <li><a href="view_deck.html">View Deck</a></li>
+            </ul>
+        </nav>
+
         <h2>Deck Name: <span id="deckName"></span></h2>
     </header>
     <main>
@@ -18,11 +33,65 @@
     </main>
     <footer>
         <button id="addFlashcardBtn">Add Flashcard</button>
-        <button onclick="window.location.href = 'deck.html'">Change Deck</button>
+        <button id="saveDeckBtn">Save Deck</button> <!-- Save Deck button -->
     </footer>
     <script src="script.js"></script>
     <script>
         document.getElementById('deckName').textContent = localStorage.getItem('deckName');
+
+        // Get a reference to the Save Deck button
+        const saveDeckBtn = document.getElementById('saveDeckBtn');
+
+        // Add an event listener to the Add Flashcard button
+        document.getElementById('addFlashcardBtn').addEventListener('click', () => {
+            // Show the Save Deck button when the Add Flashcard button is clicked
+            saveDeckBtn.style.display = 'block';
+        });
+
+        // Add an event listener to the Save Deck button
+        saveDeckBtn.addEventListener('click', () => {
+            // Retrieve deck name from the page
+            const deckName = document.getElementById('deckName').textContent;
+
+            // Retrieve flashcards associated with the deck
+            const flashcards = [];
+            const flashcardElements = document.querySelectorAll('.flashcard');
+            flashcardElements.forEach(element => {
+                const front = element.querySelector('.front').textContent;
+                const back = element.querySelector('.back').textContent;
+                flashcards.push({ front, back });
+            });
+
+            // Create a JavaScript object representing the deck
+            const deck = { name: deckName, flashcards };
+
+            // Retrieve existing decks from local storage
+            let decks = localStorage.getItem('decks');
+            decks = decks ? JSON.parse(decks) : [];
+
+            // Check if the deck already exists in the list of decks
+            const existingDeckIndex = decks.findIndex(d => d.name === deckName);
+
+            if (existingDeckIndex !== -1) {
+                // If the deck already exists, prompt the user to confirm overwrite
+                if (confirm('A deck with the same name already exists. Do you want to overwrite it?')) {
+                    // Overwrite the existing deck with the new deck data
+                    decks[existingDeckIndex] = deck;
+                } else {
+                    // If the user cancels, exit without saving
+                    return;
+                }
+            } else {
+                // If the deck does not exist, add it to the list of decks
+                decks.push(deck);
+            }
+
+            // Save the updated list of decks to local storage
+            localStorage.setItem('decks', JSON.stringify(decks));
+
+            // Provide feedback to the user that the deck has been saved
+            alert('Deck saved successfully!');
+        });
     </script>
 </body>
 </html>

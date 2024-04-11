@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Deck</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>View Deck</h1>
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="deck.html">Add Deck</a></li>
+                <li><a href="view_deck.html">View Deck</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div id="savedDecks" class="container">
+            <!-- Saved deck content will be dynamically added here -->
+        </div>
+    </main>
+    <footer>
+        <!-- Footer content here -->
+    </footer>
+    <script>
+        // Retrieve saved deck data from local storage
+        const savedDecksJson = localStorage.getItem('decks');
+
+        if (savedDecksJson) {
+            // Parse JSON string into JavaScript object
+            const savedDecks = JSON.parse(savedDecksJson);
+
+            // Iterate over saved decks and display each one
+            savedDecks.forEach(savedDeck => {
+                // Create elements to display deck name and flashcards
+                const deckDiv = document.createElement('div');
+                deckDiv.classList.add('deck');
+                const deckNameHeader = document.createElement('h2');
+                deckNameHeader.textContent = 'Deck Name: ' + savedDeck.name;
+                deckDiv.appendChild(deckNameHeader);
+                const flashcardsList = document.createElement('ul');
+                savedDeck.flashcards.forEach(flashcard => {
+                    const flashcardItem = document.createElement('li');
+                    flashcardItem.textContent = `Front: ${flashcard.front}, Back: ${flashcard.back}`;
+                    flashcardsList.appendChild(flashcardItem);
+                });
+                deckDiv.appendChild(flashcardsList);
+
+                // Append the deck to the container
+                document.getElementById('savedDecks').appendChild(deckDiv);
+            });
+        } else {
+            // If no decks are saved, display a message to the user
+            const noSavedDecksMessage = document.createElement('p');
+            noSavedDecksMessage.textContent = 'No saved decks found.';
+            document.getElementById('savedDecks').appendChild(noSavedDecksMessage);
+        }
+    </script>
+</body>
+</html>
